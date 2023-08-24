@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LOGIN PAGE</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="form">
+        <h1>European University Of Lefke</h1>
+        <div class="image"><img src="image/eul.png"></div>
+        <form action="register.php" id="loginForm" method="POST">
+            <p>User Name</p>
+            <input type="text" name="username" placeholder="User Name">
+            <p>Password</p>
+            <input type="password" name="password" placeholder="Password">
+            <button name="loginbtn" type="submit">Log In</button>
+            <input type="hidden" name="studentInfo" id="studentInfoInput">
+        </form>
+    </div>
+
+    <div id="studentInfo"></div>
+    <div id="logged-user"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Load the XML file
+            var xmlHttpRequest = new XMLHttpRequest();
+            xmlHttpRequest.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    // Parse the XML response
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(this.responseText, "text/xml");
+    
+                    // Get the login form element
+                    var formElement = document.getElementById("loginForm");
+                    formElement.addEventListener("submit", function (event) {
+                        event.preventDefault(); // Prevent form submission
+    
+                        // Get the entered username and password
+                        var usernameInput = document.querySelector("input[name='username']");
+                        var passwordInput = document.querySelector("input[name='password']");
+                        var enteredUsername = usernameInput.value;
+                        var enteredPassword = passwordInput.value;
+    
+                        // Extract student information from the XML
+                        var studentElements = xmlDoc.getElementsByTagName("Student");
+    
+                        var studentInfoDiv = document.getElementById("studentInfo");
+                        // Clear previous student information
+                        studentInfoDiv.innerHTML = "";
+    
+                        var studentFound = false;
+    
+                        for (var i = 0; i < studentElements.length; i++) {
+                            var studentElement = studentElements[i];
+                            var studentNo = studentElement.getElementsByTagName("StudentNo")[0].textContent;
+                            var name = studentElement.getElementsByTagName("Name")[0].textContent;
+    
+                            if (enteredUsername === name && enteredPassword === studentNo) {
+                                // Display the information for the matched student
+                                var surname = studentElement.getElementsByTagName("Surname")[0].textContent;
+                                var program = studentElement.getElementsByTagName("Program")[0].textContent;
+    
+                                studentInfoDiv.innerHTML +=
+                                    "<p>Student No: " + studentNo + "</p>" +
+                                    "<p>Name: " + name + "</p>" +
+                                    "<p>Surname: " + surname + "</p>" +
+                                    "<p>Program: " + program + "</p>";
+    
+                                studentFound = true;
+    
+                                // Construct the student information string
+                                var studentInfo =
+                                    "<br>Student No: " + studentNo + "</br>" +
+                                    "<br>Name: " + name + "</br>" +
+                                    "<br>Surname: " + surname + "</br>" +
+                                    "<br>Program: " + program + "</br>" +
+                                    "<br>CGPA: 3.2</br>" +
+                                    "<br>Semester: 4th</br>";
+    
+                                // Set the student information as the value of the hidden input field
+                                var studentInfoInput = document.getElementById("studentInfoInput");
+                                studentInfoInput.value = studentInfo;
+    
+                                // Submit the login form
+                                formElement.submit();
+    
+                                break; // Exit the loop since a match is found
+                            }
+                        }
+    
+                        if (!studentFound) {
+                            alert("Invalid username or password");
+                        }
+                    });
+                }
+            };
+            xmlHttpRequest.open("GET", "student.xml", true); // Replace "student.xml" with the path to your XML file
+            xmlHttpRequest.send();
+        });
+    </script>
+    
+
+</body>
+
+</html>

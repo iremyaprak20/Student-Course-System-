@@ -1,0 +1,91 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.nav{
+    background: #31398E;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.nav i {
+    font-size: 25px;
+    padding: 10px 20px;
+    color: #31398E;
+    border: none;
+    cursor: pointer;
+}
+
+#student {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    gap: 100px;
+}
+
+#student-img {
+    height: 150px;
+    width: auto;
+}
+
+.logged-user {
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+
+#section2 {
+    padding: 20px;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+#selectBox {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#addBtn {
+    padding: 10px 20px;
+    background-color: #31398E;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#selectList {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+
+#comment {
+    padding: 20px;
+}
+
+#commentForm textarea {
+    width: 95%;
+    height: 100px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+#commentForm button {
+    padding: 10px 20px;
+    background-color: #31398E;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
